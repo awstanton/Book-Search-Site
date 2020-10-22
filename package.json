@@ -4,7 +4,8 @@
   "description": "search engine for books about computer science",
   "main": "booksapp.js",
   "scripts": {
-    "dev": "nodemon booksapp"
+    "dev": "nodemon booksapp",
+    "start": "node booksapp.js"
   },
   "author": "",
   "license": "ISC",
