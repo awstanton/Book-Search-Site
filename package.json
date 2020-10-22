@@ -4,7 +4,7 @@
   "description": "search engine for books about computer science",
   "main": "booksapp.js",
   "scripts": {
-    "dev": "nodemon booksapp",
+    "dev": "nodemon booksapp"
   },
   "author": "",
   "license": "ISC",
@@ -18,11 +18,12 @@
     "express-session": "^1.17.1",
     "express-validator": "^6.6.1",
     "helmet": "^4.1.0",
+    "level": "^6.0.1",
     "mongodb": "^3.6.0",
     "natural": "^2.1.5",
     "secure-random": "^1.1.2",
-    "uuid": "^8.3.0",
-	"session-file-store": "^1.4.0"
+    "session-file-store": "^1.4.0",
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
