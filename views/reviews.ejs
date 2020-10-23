@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+        <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+		<title>Books App</title>
+		<link rel="icon" type="image/x-icon" href="/img/favicon.ico"/>
+        <link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+	<body>
+        <div id="headerContainer">
+            <div id="headerBookContainer">
+                <div id="headerBookTitle"><%= bookTitle %></div>
+                <div id="headerBookInfo">by <%= bookAuthor %>, <%= bookDate %></div>
+            </div>
+            <div id="menuContainer">
+                <div class="clearfix">
+                    <span class="menuIcon">&#9776</span>
+                </div>
+                <div class="menuOptions displayNone">
+                    <span class="menuInfo">Reviews</span>
+                    <div class="menuOption">
+                        <a href="/info/<%= bookId %>" class="menuLink">Info</a>
+                        <span class="menuArrow">&#62;</span>
+                    </div>
+                    <div class="menuOption">
+                        <a href="/results" class="menuLink">Results</a>
+                        <span class="menuArrow">&#62;&#62;</span>
+                    </div>
+                    <div class="menuOption">
+                        <a href="/" class="menuLink">Search</a>
+                        <span class="menuArrow">&#62;&#62;&#62;</span>
+                    </div>
+                    <span class="menuInfo">Signed in as <%= username %></span>
+                    <div class="menuOption">
+                        <a href="/signOut" class="menuLink">Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="bookContainer">
+            <div id="reviewsListingsContainer">
+                <div id="reviewsTitle">Reviews</div>
+
+                <% for (var i = 0; i < reviews.length; ++i) { %>
+                    <div class="reviewsListingBox">
+                        <a href="/readReview/<%= bookId %>/<%= reviews[i].reviewId %>" class="link" >
+                            <span>Review by <%= reviews[i].username %></span><br><span><%= reviews[i].date %></span>
+                        </a>
+                    </div>
+                <% } %>
+                
+                <!-- <div class="reviewsListingBox">
+                    <span>Review by user2</span><br><span>August 22, 2020</span>
+                </div>
+                <div class="reviewsListingBox">
+                    <span>Review by user2</span><br><span>August 22, 2020</span>
+                </div>
+                <div class="reviewsListingBox">
+                    <span>Review by user2</span><br><span>August 22, 2020</span>
+                </div> -->
+            </div>
+        </div>
+        <!-- <div id="bookId">1</div> -->
+	</body>
+    <script src="/js/menu.js"></script>
+</html>

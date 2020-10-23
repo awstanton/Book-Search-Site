@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+		<title>Books App</title>
+		<link rel="icon" type="image/x-icon" href="/img/favicon.ico"/>
+        <link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+	<body>
+        <div id="resultsSearchContainer">
+            <form id="resultsSearchForm" method="POST" action="/search/1">
+                <input id="resultsSearchInput" name="searchString" autofocus maxlength="350" required placeholder="Search books by title" type="text"><!--
+             --><input id="resultsSearchButton" type="submit" value="Search">
+                <input type="hidden" name="_csrf" value="<%= csrfToken  %>">
+            </form><!--
+         --><div id="menuContainer">
+                <div class="clearfix">
+                    <span class="menuIcon">&#9776</span>
+                </div>
+                <div class="menuOptions displayNone">
+                    <span class="menuInfo">Results</span>
+                    <div class="menuOption">
+                        <a href="/" class="menuLink">Search</a>
+                        <span class="menuArrow">&#60;</span>
+                    </div>
+                    <% if (signedIn) { %>
+                        <span class="menuInfo">Signed in as <%= username %></span>
+                        <div class="menuOption">
+                            <a href="/signOut" class="menuLink">Sign Out</a>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+            <div id="resultsContainer">
+                <div id="resultsCountContainer">
+                    <span id="resultsCount"><%= numResults %> results for "<span id="searchString"><%= searchString %></span>", page <%= page %></span>
+                </div>
+                <% for (var i = 0; i < topSortedResults.length; ++i) { %>
+                    <div class="resultBox">
+                        <a href="https://localhost:8000/info/<%= topSortedResults[i]._id %>" class="resultTitle"><%= topSortedResults[i].fullTitle %></a>
+                        <span class="resultInfo">By <%= topSortedResults[i].author_name %>, <%= topSortedResults[i].publish_date %></span>
+                    </div>
+                <% } %>
+            </div>
+            <div id="pageNumberContainer">
+                <% for (var i = 0, j = 1; i < numResults; i += 100, ++j) { %>
+                    <% if (j === Number(page)) { %>
+                        <a class="pageNumber selectedPage"><%= j %></a>
+                    <% } else { %>
+                        <a class="pageNumber"><%= j %></a>
+                    <% } %>
+                <% } %>
+                <!-- <a class="pageNumber">&#62;</a> -->
+            </div>
+        </div>
+	</body>
+    <script src="/js/menu.js"></script>
+    <script src="/js/results.js"></script>
+</html>

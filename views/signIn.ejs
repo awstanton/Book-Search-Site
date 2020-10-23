@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+		<title>Books App</title>
+		<link rel="icon" type="image/x-icon" href="/img/favicon.ico"/>
+        <link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+	<body>
+        <h1 id="credentialsTitle">Books App</h1>
+        <div id="credentialsDescriptionContainer">
+            <span id="credentialsDescription">Sign in to your account</span>
+        </div>
+        <div id="credentialsContainer">
+            <form id="credentialsForm" action="/signIn" method="POST" >
+                <span id="credentialsUsername">Username</span>
+                <input id="credentialsUsernameInput" name="username" type="text" minlength="5" maxlength="64" required autofocus>
+                <span id="credentialsPassword">Password</span>
+                <input id="credentialsPasswordInput" name="password" type="password" minlength="4" maxlength="64" required><br>
+                <input id="credentialsButton" type="submit" value="Sign In">
+                <input type="hidden" name="_csrf" value="<%= csrfToken  %>">
+            </form>
+        </div>
+	</body>
+
+</html>

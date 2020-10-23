@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+        <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+		<title>Books App</title>
+		<link rel="icon" type="image/x-icon" href="/img/favicon.ico"/>
+        <link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+	<body>
+        <h1 id="credentialsTitle">Books App</h1>
+        <div id="credentialsDescriptionContainer">
+            <span id="credentialsDescription">Create a new account</span>
+        </div>
+        <div id="credentialsContainer">
+            <form id="credentialsForm" action="/signUp" method="POST">
+                <span id="credentialsUsername">Username</span>
+                <input id="credentialsUsernameInput" name="username" type="text" minlength="8" maxlength="64" required autofocus>
+                <span id="credentialsPassword">Password</span>
+                <input id="credentialsPasswordInput" type="password" name="password" minlength="8" maxlength="64" required><br>
+                <span id="credentialsPasswordConfirm">Confirm Password</span>
+                <input id="credentialsPasswordConfirmInput" name="confirmPassword" type="password" minlength="8" maxlength="64" required><br>
+                <input id="credentialsButton" type="submit" value="Sign Up">
+            </form>
+        </div>
+	</body>
+
+</html>

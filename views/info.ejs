@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+        <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+        <title>Books App</title>
+        <link rel="icon" type="image/x-icon" href="/img/favicon.ico"/>
+        <link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
+        <% if (book.isbn) { %>
+        <script type="text/javascript">
+            google.books.setOnLoadCallback(function () {
+                (new google.books.DefaultViewer(document.getElementById("infoViewerCanvas"))).load("isbn:<%= book.isbn[0] %>", function() {
+                    $("#infoViewerCanvas").prev().addClass("displayNone");
+                });
+            });
+            google.books.load();
+        </script>
+        <% } %>
+	</head>
+	<body>
+        <div id="headerContainer">
+            <div id="headerBookContainer">
+                <div id="headerBookTitle"><%= book.title_suggest %></div>
+                <div id="headerBookInfo">by <%= book.author %><% if (book.date) { %>, <%= book.date %><% } %></div>
+            </div>
+            <div id="menuContainer">
+                <div class="clearfix">
+                    <span class="menuIcon">&#9776</span>
+                </div>
+                <div class="menuOptions displayNone">
+                    <span class="menuInfo">Info</span>
+                    <div class="menuOption">
+                        <a href="/results" class="menuLink">Results</a>
+                        <span class="menuArrow">&#60;</span>
+                    </div>
+                    <div class="menuOption">
+                        <a href="/" class="menuLink">Search</a>
+                        <span class="menuArrow">&#60;&#60;</span>
+                    </div>
+                    <% if (signedIn) { %>
+                        <span class="menuInfo">Signed in as <%= username %></span>
+                        <div class="menuOption">
+                            <a href="/signOut" class="menuLink">Sign Out</a>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <div id="bookContainer">
+            <div class="clearfix">
+                <div id="infoLeftContainer">
+                    <div id="infoDetailsContainer">
+                        <dl id="infoDetailsList">
+                            <dt class="infoDetail">Title</dt><!--
+                         --><dd class="infoDetailText"><%= book.title_suggest %></dd>
+                            <dt class="infoDetail">Author</dt><!--
+                         --><dd class="infoDetailText"><%= book.author %></dd>
+                            <% if (book.editionCount) { %>
+                                <dt class="infoDetail">Edition</dt><!--
+                            --><dd class="infoDetailText"><%= book.edition_count %></dd>
+                            <% } %>
+                            <% if (pageCount) { %>
+                                <dt class="infoDetail">Pages</dt><!--
+                            --><dd class="infoDetailText"><%= pageCount %></dd>
+                            <% } %>
+                            <% if (book.date) { %>
+                                <dt class="infoDetail">Published</dt><!--
+                             --><dd class="infoDetailText"><%= book.date %></dd>
+                            <% } %>
+                            <% if (book.publisher) { %>
+                                <dt class="infoDetail">Publisher</dt><!--
+                             --><dd class="infoDetailText"><%= book.publisher %></dd>
+                            <% } %>
+                            <% if (book.isbns) { %>
+                                <dt class="infoDetail">ISBN</dt><!--
+                            --><dd class="infoDetailText"><%= book.isbns %></dd>
+                            <% } %>
+                        </dl>
+                    </div>
+                    <div class="infoLeftButtonContainer clearfix">
+                        <% if (rating) { %>
+                            <span id="infoUserRating">BooksApp User Rating <%= rating %>/5</span>
+                        <% } %>
+                        <!-- <span class="infoLeftButton">Return to Results</span> -->
+                    </div>
+                    <div class="infoLeftButtonContainer clearfix">
+                        <a id="readReviews" href="/reviews/<%= book._id %>" class="infoLeftButton">Read Reviews</a>
+                        <a id="writeReview" href="/writeReview/<%= book._id %>" class="infoLeftButton">Write Review</a>
+                    </div>
+                    <% if (book.isbn) { %>
+                        <div id="infoCoverImageContainer" class="infoContainer">
+                            <img id="infoCoverImage" src="https://covers.openlibrary.org/b/isbn/<%= book.isbn[0]%>-M.jpg" />
+                        </div>
+                    <% } %>
+                    <% if (book.subject) { %>
+                        <div id="infoSubjectsContainer">
+                            <span class="infoDetail">Subjects</span><br>
+                            <span><%= book.subject %></span>
+                        </div>
+                    <% } %>
+                </div>
+                <div id="infoRightContainer">
+                    <% if (description) { %>
+                        <div>
+                            <span class="infoRightButton">View Description</span>
+                        </div>
+                        <div id="infoDescription" class="displayNone"><%= description %></div>
+                    <% } %>
+                    <% if (termsAndPhrases) { %>
+                        <div>
+                            <span class="infoRightButton">View Common Terms and Phrases</span>
+                        </div>
+                        <div id="infoTermsAndPhrases" class="displayNone"><%= termsAndPhrases %></div>
+                    <% } %>
+                    <% if (tableOfContents) { %>
+                        <div>
+                            <span class="infoRightButton">View Table of Contents</span>
+                        </div>
+                        <div id="infoTableOfContents" class="displayNone"><%= tableOfContents %></div>
+                    <% } %>
+                    <% if (book.isbn) { %>
+                        <div>
+                            <span class="infoRightButton">View Google Books Preview</span>
+                        </div>
+                    <% } %>
+                    <div id="infoViewerCanvas" class="visibilityHidden"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="/js/menu.js"></script>
+    <script src="/js/info.js"></script>
+</html>

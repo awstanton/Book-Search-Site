@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+        <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+		<title>Books App</title>
+		<link rel="icon" type="image/x-icon" href="/img/favicon.ico"/>
+        <link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+	<body>
+        <div id="headerContainer">
+            <div id="headerBookContainer">
+                <div id="headerBookTitle"><%= bookTitle %></div>
+                <div id="headerBookInfo">by <%= bookAuthor %>, <%= bookDate %></div>
+            </div>
+            <div id="menuContainer">
+                <div class="clearfix">
+                    <span class="menuIcon">&#9776</span>
+                </div>
+                <div class="menuOptions displayNone">
+                    <span class="menuInfo">Review</span>
+                    <div class="menuOption">
+                        <a href="/reviews/<%= bookId %>" class="menuLink">Reviews</a>
+                        <span class="menuArrow">&#60;</span>
+                    </div>
+                    <div class="menuOption">
+                        <a href="/info/<%= bookId %>" class="menuLink">Info</a>
+                        <span class="menuArrow">&#60;&#60;</span>
+                    </div>
+                    <div class="menuOption">
+                        <a href="/results" class="menuLink">Results</a>
+                        <span class="menuArrow">&#60;&#60;&#60;</span>
+                    </div>
+                    <div class="menuOption">
+                        <a href="/" class="menuLink">Search</a>
+                        <span class="menuArrow">&#60;&#60;&#60;&#60;</span>
+                    </div>
+                    <span class="menuInfo">Signed in as <%= username %></span>
+                    <div class="menuOption">
+                        <a href="/signOut" class="menuLink">Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="bookContainer">
+            <div id="reviewTitle">Review by <%= review.username %> on <%= review.date %></div>
+            <div id="readReviewContainer">
+                <div id="reviewLeftContainer">
+                    <div class="reviewLeftBox">
+                        <div>Problem</div>
+                        <div class="breakWord"><%= review.problem %></div>
+                        <!-- <input name="problem" required maxlength="100" style="display: block; margin: auto;" /> -->
+                        <!-- <textarea name="problem" required maxlength="100" cols="30" rows="3" style="resize: none;"></textarea> -->
+                    </div>
+                    <div class="reviewLeftBox">
+                        <!-- <span style="display: block;">Rate the Book on its Solution(s) to the Problem</span>
+                        <input id="rating" name="rating" list="ratings" type="number" required style="width: 25px;" maxlength="1" min="1" max="5" />
+                        <span> / 5</span> -->
+                        <span>Rating</span><br>
+                        <span><%= review.rating %> / 5</span>
+                    </div>
+                </div>
+                <div id="reviewRightContainer">
+                    <div>Summary</div>
+                    <span class="breakWord"><%= review.summary %></span>
+                    <!-- <textarea name="summary" required maxlength="500" cols="50" rows="9" style="resize: none;"></textarea> -->
+                    <!-- Discusses compilers and interpreters and compares them. Designs of specific compilers used for popular languages are presented in detail and a sequence of steps for building a compiler is shown. Well explained and clear. -->
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="/js/menu.js"></script>
+</html>
