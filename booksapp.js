@@ -16,6 +16,12 @@
 
 
     //// SET UP LOGGER ////
+    var logsDir = __dirname + '/logs';
+    var logsFile = 'booksapp-rotate.log';
+
+    if (!fs.existsSync(logsDir))
+        fs.mkdirSync(logsDir);
+
     var logger = bunyan.createLogger(
         { name: "booksApp",
         streams: [
@@ -29,7 +35,7 @@
             // },
             {
                 type: 'rotating-file',
-                path: __dirname + '/logs/booksapp-rotate.log',
+                path: logsDir +  '/' + logsFile,
                 period: '1d',
                 count: 2,
                 level: 'info'
