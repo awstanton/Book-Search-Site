@@ -50,8 +50,12 @@
 
 
     //// SET UP DATABASE ////
-    const dbUri = 'mongodb://127.0.0.1:27017';
-    const dbClient = new MongoClient(dbUri, { useUnifiedTopology: true });
+    // const dbUri = 'mongodb://127.0.0.1:27017';
+    // const uri = "mongodb+srv://booksUser:<password>@booksappcluster.hu4bg.mongodb.net/<dbname>?retryWrites=true&w=majority";
+    const dbUri = "mongodb+srv://booksUser:2IlKgUwYlZEjCwJO@booksappcluster.hu4bg.mongodb.net/booksapp?retryWrites=true&w=majority";
+    // const dbClient = new MongoClient(dbUri, { useUnifiedTopology: true });
+    
+    const dbClient = new MongoClient(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
     try {
         await dbClient.connect();
         console.log('connected to database on port 27017');

@@ -576,7 +576,7 @@ module.exports = function handlers(app, dbClient, logger, invertedIndex) {
                     if (result === null) {
                         if (req.body.password === req.body.confirmPassword) {
                             const hash = await argon2.hash(req.body.password);
-                            await usersCollection.insertOne({ username: req.body.username, password: hash });
+                            await usersCollection.insertOne({ username: req.body.username, password: hash, failedAttempts: 0, lockedUntil: 0 });
     
                             res.redirect("/signIn");
                         }
