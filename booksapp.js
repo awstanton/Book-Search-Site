@@ -69,7 +69,7 @@
     // Note: should be fine without callback since according to NPM level documentation, any reads or writes before it is opened are queued internally
     var invertedIndex;
     await new Promise((resolve, reject) => {
-        invertedIndex = level("C:/Users/Andrew/Documents/NodeJSApps/HelloWorld/booksdb", {valueEncoding: 'json'}, (err) => {
+        invertedIndex = level(__dirname + "/booksdb", {valueEncoding: 'json'}, (err) => {
             if (err) throw err;
             else resolve();
         })
