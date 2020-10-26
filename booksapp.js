@@ -52,7 +52,17 @@
     //// SET UP DATABASE ////
     // const dbUri = 'mongodb://127.0.0.1:27017';
     // const uri = "mongodb+srv://booksUser:<password>@booksappcluster.hu4bg.mongodb.net/<dbname>?retryWrites=true&w=majority";
-    const dbUri = "mongodb+srv://booksUser:2IlKgUwYlZEjCwJO@booksappcluster.hu4bg.mongodb.net/booksapp?retryWrites=true&w=majority";
+    
+    let dbUri;
+
+    if (process.env.NODE_ENV === 'prod') {
+        dbUri = "mongodb+srv://booksUser:2IlKgUwYlZEjCwJO@booksappcluster.hu4bg.mongodb.net/booksapp?retryWrites=true&w=majority";
+    }
+    else {
+        dbUri = 'mongodb://127.0.0.1:27017';
+    }
+    
+    // const dbUri = "mongodb+srv://booksUser:2IlKgUwYlZEjCwJO@booksappcluster.hu4bg.mongodb.net/booksapp?retryWrites=true&w=majority";
     // const dbClient = new MongoClient(dbUri, { useUnifiedTopology: true });
     
     const dbClient = new MongoClient(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -120,8 +130,22 @@ var fileStoreOptions = {};
     
 
     //// START SERVER ////
-    // perhaps use a key and cert here instead so passphrase is not revealed, or pass it as command line argument
-    https.createServer({ pfx: fs.readFileSync('storekey.pfx'), passphrase: 'storekey' }, app)
+    let options;
+    if (process.env.NODE_ENV === 'prod') {
+        options = {
+            key: fs.readFileSync(__dirname + '/server.key'),
+            cert: fs.readFileSync(__dirname + '/server.cert')
+        };
+    }
+    else {
+        options = {
+            key: fs.readFileSync(__dirname + '/server-dev.key'),
+            cert: fs.readFileSync(__dirname + '/server-dev.cert')
+        };
+    }
+    
+    https.createServer(options, app)
+    //https.createServer({ pfx: fs.readFileSync('storekey.pfx'), passphrase: 'storekey' }, app)
     .listen(port, () => console.log(`booksapp started on port ${port}`));
 })();
 
