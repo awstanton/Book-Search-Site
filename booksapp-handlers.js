@@ -1,8 +1,6 @@
 'use strict';
 
 const argon2 = require('argon2');
-const secureRandom = require('secure-random');
-//const jwt = require('jsonwebtoken');
 const httpsget = require('https').get;
 const ObjectId = require('mongodb').ObjectId;
 const { v4: uuidv4, validate: uuidValidate } = require('uuid');
@@ -16,7 +14,7 @@ const limitFailedAttempts = 5;
 const lockedOutInterval = 180000;
 
 module.exports = function handlers(app, dbClient, logger, invertedIndex) {
-    var key = secureRandom(256, { type: 'Buffer' });
+    // var key = secureRandom(256, { type: 'Buffer' });
     var reviewsCollection = dbClient.db("booksapp").collection("reviews");
     var usersCollection = dbClient.db("booksapp").collection("users");
 

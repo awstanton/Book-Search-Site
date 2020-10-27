@@ -14,6 +14,7 @@
     const FileStore = require('session-file-store')(session);
     const { v4: uuidv4, parse: uuidParse, stringify: uuidStringify } = require('uuid');
     var level = require('level');
+    const cryptoRandomString = require('crypto-random-string');
 
 
     //// SET UP LOGGER ////
@@ -30,10 +31,6 @@
                 stream: process.stdout,
                 level: 'trace'
             },
-            // {
-            //     path: __dirname + '/logs/booksapp.log',
-            //     level: 'info'
-            // },
             {
                 type: 'rotating-file',
                 path: logsDir +  '/' + logsFile,
@@ -51,9 +48,6 @@
 
 
     //// SET UP DATABASE ////
-    // const dbUri = 'mongodb://127.0.0.1:27017';
-    // const uri = "mongodb+srv://booksUser:<password>@booksappcluster.hu4bg.mongodb.net/<dbname>?retryWrites=true&w=majority";
-    
     let dbUri;
 
     if (process.env.NODE_ENV === 'prod') {
@@ -62,9 +56,6 @@
     else {
         dbUri = 'mongodb://127.0.0.1:27017';
     }
-    
-    // const dbUri = "mongodb+srv://booksUser:2IlKgUwYlZEjCwJO@booksappcluster.hu4bg.mongodb.net/booksapp?retryWrites=true&w=majority";
-    // const dbClient = new MongoClient(dbUri, { useUnifiedTopology: true });
     
     const dbClient = new MongoClient(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
     try {
@@ -89,8 +80,8 @@
     
     //// SET UP WEB FRAMEWORK ////
     var app = express();
-    const port = process.env.PORT || 8000;
-    const httpsPort = 7000;
+    const port = process.env.PORT || 3000;
+    const httpsPort = 8000;
 
     app.set('view engine', 'ejs');
     app.set('views', __dirname + '/views');
@@ -132,11 +123,9 @@
     
 
     //// CONFIGURE SESSION ////
-var fileStoreOptions = {};
-
     app.use(session({
-        store: new FileStore(fileStoreOptions),
-        secret: 'pwdpwdpnwdpnwd',
+        store: new FileStore({}),
+        secret: cryptoRandomString({length: 10}),
         cookie: {
             httpOnly: true,
             secure: true,
@@ -147,6 +136,7 @@ var fileStoreOptions = {};
         saveUninitialized: false
     }));
 
+    
     //// REGISTER HANDLERS ////
     handlers(app, dbClient, logger, invertedIndex);
     
