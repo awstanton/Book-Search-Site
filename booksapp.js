@@ -86,7 +86,7 @@
     app.set('view engine', 'ejs');
     app.set('views', __dirname + '/views');
     app.use(express.static(__dirname + '/public'));
-    app.use(express.urlencoded({ extended: false, type: "application/x-www-form-urlencoded" })); // for parsing application/x-www-form-urlencoded
+    app.use(express.urlencoded({ extended: false, type: "application/x-www-form-urlencoded" }));
 
 
     //// CONFIGURE CSP ////
@@ -114,7 +114,6 @@
     else {
         app.get('*', function(req, res, next) {
             if (req.protocol !== "https") {
-                console.log(req.get('Host'));
                 return res.redirect('https://' + req.hostname + ':' + httpsPort + req.url);
             }
             return next();
@@ -136,7 +135,7 @@
         saveUninitialized: false
     }));
 
-    
+
     //// REGISTER HANDLERS ////
     handlers(app, dbClient, logger, invertedIndex);
     
