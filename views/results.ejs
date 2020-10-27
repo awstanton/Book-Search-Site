@@ -39,7 +39,7 @@
                 </div>
                 <% for (var i = 0; i < topSortedResults.length; ++i) { %>
                     <div class="resultBox">
-                        <a href="https://localhost:8000/info/<%= topSortedResults[i]._id %>" class="resultTitle"><%= topSortedResults[i].fullTitle %></a>
+                        <a href="/info/<%= topSortedResults[i]._id %>" class="resultTitle"><%= topSortedResults[i].fullTitle %></a>
                         <span class="resultInfo">By <%= topSortedResults[i].author_name %>, <%= topSortedResults[i].publish_date %></span>
                     </div>
                 <% } %>

@@ -4,6 +4,7 @@
     //// IMPORT MODULES ////
     const express = require('express');
     const fs = require('fs');
+    const http = require('http');
     const https = require('https');
     const helmet = require('helmet');
     const bunyan = require('bunyan');
@@ -89,6 +90,8 @@
     //// SET UP WEB FRAMEWORK ////
     var app = express();
     const port = process.env.PORT || 8000;
+    const httpsPort = 7000;
+
     app.set('view engine', 'ejs');
     app.set('views', __dirname + '/views');
     app.use(express.static(__dirname + '/public'));
@@ -108,6 +111,25 @@
             },
         }
     }));
+
+    if (process.env.NODE_ENV === "prod") {
+        app.get('*', function(req, res, next) {
+            if (req.headers['x-forwarded-proto'] !== 'https') {
+                return res.redirect('https://' + req.hostname + ':' + httpsPort + req.url);
+            }
+            return next();
+        });
+    }
+    else {
+        app.get('*', function(req, res, next) {
+            if (req.protocol !== "https") {
+                console.log(req.get('Host'));
+                return res.redirect('https://' + req.hostname + ':' + httpsPort + req.url);
+            }
+            return next();
+        });
+    }
+    
 
     //// CONFIGURE SESSION ////
 var fileStoreOptions = {};
@@ -143,10 +165,10 @@ var fileStoreOptions = {};
             cert: fs.readFileSync(__dirname + '/server-dev.cert')
         };
     }
-    
+    http.createServer(app).listen(port, () => { console.log(`booksapp started on port ${port}`) });
     https.createServer(options, app)
     //https.createServer({ pfx: fs.readFileSync('storekey.pfx'), passphrase: 'storekey' }, app)
-    .listen(port, () => console.log(`booksapp started on port ${port}`));
+    .listen(httpsPort, () => console.log(`booksapp started on https port ${httpsPort}`));
 })();
 
 
