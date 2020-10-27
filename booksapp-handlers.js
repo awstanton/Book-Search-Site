@@ -18,12 +18,12 @@ module.exports = function handlers(app, dbClient, logger, invertedIndex) {
     var reviewsCollection = dbClient.db("booksapp").collection("reviews");
     var usersCollection = dbClient.db("booksapp").collection("users");
 
-    app.get('/', (req, res) => {
+    app.get('/', csrfProtection, (req, res) => {
         console.log(req.session);
         console.log(req.headers);
         console.log(req.body);
         // console.log("session " + req.session.id + " in search");
-        res.render('index.ejs', { signedIn: req.session.signedIn, username: req.session.username, csrfToken: 'hi' });
+        res.render('index.ejs', { signedIn: req.session.signedIn, username: req.session.username, csrfToken: req.csrfToken() });
     });
 
     app.get('/results', csrfProtection, (req, res) => {
