@@ -103,24 +103,23 @@
         }
     }));
 
-    if (process.env.NODE_ENV === 'production') {
-        app.get('*', function(req, res, next) {
-            if (req.headers['x-forwarded-proto'] !== 'https') {
-                res.set('Connection', 'keep-alive');
-                console.log(res.header);
-                return res.redirect('https://' + req.hostname + ':' + httpsPort + req.url);
-            }
-            return next();
-        });
-    }
-    else {
+    // if (process.env.NODE_ENV === 'production') {
+    //     app.get('*', function(req, res, next) {
+    //         if (req.headers['x-forwarded-proto'] !== 'https') {
+    //             res.set('Connection', 'keep-alive');
+    //             return res.redirect('https://' + req.hostname + ':' + httpsPort + req.url);
+    //         }
+    //         return next();
+    //     });
+    // }
+    // else {
         app.get('*', function(req, res, next) {
             if (req.protocol !== "https") {
                 return res.redirect('https://' + req.hostname + ':' + httpsPort + req.url);
             }
             return next();
         });
-    }
+    // }
     
 
     //// CONFIGURE SESSION ////
