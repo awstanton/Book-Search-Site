@@ -452,7 +452,7 @@ module.exports = function handlers(app, dbClient, logger, invertedIndex) {
 
     app.get('/signIn', (req, res) => {
         if (!req.session.signedIn) {
-            res.render('signIn.ejs', { csrfToken: req.csrfToken() });
+            res.render('signIn.ejs', {  });
         }
         else {
             res.send("already signed in");
