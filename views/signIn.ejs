@@ -20,6 +20,7 @@
                 <span id="credentialsPassword">Password</span>
                 <input id="credentialsPasswordInput" name="password" type="password" minlength="4" maxlength="64" required><br>
                 <input id="credentialsButton" type="submit" value="Sign In">
+                <input type="hidden" name="_csrf" value="<%= csrfToken  %>">
             </form>
         </div>
 	</body>
