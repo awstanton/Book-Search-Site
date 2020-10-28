@@ -50,7 +50,7 @@
     //// SET UP DATABASE ////
     let dbUri;
 
-    if (process.env.NODE_ENV === 'prod') {
+    if (process.env.NODE_ENV === 'production') {
         dbUri = "mongodb+srv://booksUser:2IlKgUwYlZEjCwJO@booksappcluster.hu4bg.mongodb.net/booksapp?retryWrites=true&w=majority";
     }
     else {
@@ -103,9 +103,11 @@
         }
     }));
 
-    if (process.env.NODE_ENV === "prod") {
+    if (process.env.NODE_ENV === 'production') {
         app.get('*', function(req, res, next) {
             if (req.headers['x-forwarded-proto'] !== 'https') {
+                res.set('Connection', 'keep-alive');
+                console.log(res.header);
                 return res.redirect('https://' + req.hostname + ':' + httpsPort + req.url);
             }
             return next();
@@ -142,7 +144,7 @@
 
     //// START SERVER ////
     let options;
-    if (process.env.NODE_ENV === 'prod') {
+    if (process.env.NODE_ENV === 'production') {
         options = {
             key: fs.readFileSync(__dirname + '/server.key'),
             cert: fs.readFileSync(__dirname + '/server.cert')
