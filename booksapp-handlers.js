@@ -450,7 +450,7 @@ module.exports = function handlers(app, dbClient, logger, invertedIndex) {
         }
     });
 
-    app.get('/signIn', csrfProtection, (req, res) => {
+    app.get('/signIn', (req, res) => {
         if (!req.session.signedIn) {
             res.render('signIn.ejs', { csrfToken: req.csrfToken() });
         }
@@ -459,7 +459,7 @@ module.exports = function handlers(app, dbClient, logger, invertedIndex) {
         }
     });
 
-    app.post('/signIn', parseForm, csrfProtection, [
+    app.post('/signIn', [
         check('username').stripLow().trim().isLength({ min: 8, max: 64 }).isLowercase()
         .isWhitelisted("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#%^*-_+,.;:[]"),
         check('password').stripLow().trim().isLength({ min: 8, max: 64 })
