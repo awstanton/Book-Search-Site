@@ -80,8 +80,8 @@
     
     //// SET UP WEB FRAMEWORK ////
     var app = express();
-    const port = process.env.PORT || 3000;
-    const httpsPort = 8000;
+    const port = 80;
+    const httpsPort = process.env.PORT || 443;
 
     app.set('view engine', 'ejs');
     app.set('views', __dirname + '/views');
